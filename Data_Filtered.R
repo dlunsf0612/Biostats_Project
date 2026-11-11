@@ -26,13 +26,18 @@ all.df = og.df |>
 # filter to only state surveys
 # filter to exclude cities 
 
+# The new filtered and concatenated data frame contains exemptions and MMR vaccine coverage 
+# for all years and only including the 50 states
+# Columns were renamed and estimate was broken up according to
+# either the vaccination coverage % or the exemption %
+
 concat.df = all.df |>
   dplyr::select(-est) |>
   filter(str_detect(vacc.exemp, "MMR|MMR (PAC)|Exemption"),
          !is.na(estimate) == TRUE,
          estimate != "NReq",
          geo.type == "States", 
-         str_detect(geo, "NY-City of New York|TX-City of Houston|District of Columbia", negate = TRUE))|>
+         str_detect(geo, "NY-Rest of state|NY-City of New York|TX-City of Houston|District of Columbia", negate = TRUE))|>
   pivot_wider(names_from = vacc.exemp, values_from = estimate) |>
   rename(exemp.perc = Exemption, 
          mmr.perc = MMR, 
