@@ -43,5 +43,22 @@ concat.df = all.df |>
          mmr.perc = MMR, 
          mmr.pac.perc = `MMR (PAC)`)
 
-# write the cleaned and filtered into a csv
-write.csv(concat.df, "MMR_data.csv")
+mmr.mean.df = concat.df |>
+  summarize(
+    mean.exemp = mean(exemp.perc, na.rm = TRUE),
+    mean.mmr = mean(mmr.perc, na.rm = TRUE),
+    .by = c(year, geo)) |>
+  drop_na()
+
+pac.mean.df = concat.df |>
+  summarize(
+    mean.exemp = mean(exemp.perc, na.rm = TRUE),
+    mean.pac = mean(mmr.pac.perc, na.rm = TRUE),
+    .by = c(year, geo)) |>
+  drop_na()
+
+
+# write the cleaned and filtered data frames into csv files
+write.csv(concat.df, "all_data.csv")
+write.csv(mmr.mean.df, "MMR_data.csv")
+write.csv(pac.mean.df, "PAC_data.csv")

@@ -8,9 +8,16 @@ This GitHub folder will hold any files that we can share with each other
 The linked csv is filtered and cleaned up from the original data 
 I filtered the data to only include MMR vaccinations and all vaccine exemptions
 
-IMPORTANT: DO NOT use drop_na() because it will drop all rows with NA and many of the rows SHOULD have NA. Use filter(!is.na("insert col name here")) instead to drop NA values within columns before doing calculations 
+IMPORTANT: DO NOT use drop_na() on all_data.csv because it will drop all rows with NA and many of the rows SHOULD have NA. Use filter(!is.na("insert col name here")) instead to drop NA values within columns before doing calculations 
 
 When importing the CSV it will give you an addtion column labeled "...1" use dplyr::select(-`...1`) to get rid of it 
+OR use read.csv("insert_file_name", row.names = NULL)[, -1]
+
+all_data.csv contains both MMR and MMR (PAC) raw values 
+
+MMR_data.csv contains means for each state in each year and drops any NA values
+
+PAC_data.csv contains means for each state in each year for MMR (PAC) coverage and drops NA values
 
 List of column names
 
